@@ -1,0 +1,54 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: familie-ws-proxy
+  namespace: teamfamilie
+  labels:
+    team: teamfamilie
+spec:
+  image: {{ image }}
+  port: 8080
+  webproxy: false
+  ingresses:
+    - https://familie-ws-proxy.dev-fss-pub.nais.io
+  accessPolicy:
+    inbound:
+      rules:
+        - application: familie-oppdrag-backend
+          cluster: dev-gcp
+  env:
+    - name: HTTP_PROXY
+      value: http://webproxy-nais.nav.no:8088
+    - name: HTTPS_PROXY
+      value: http://webproxy-nais.nav.no:8088
+    - name: NO_PROXY
+      value: localhost,127.0.0.1,.local,.adeo.no,.nav.no,.nais.io,.intern.dev.nav.no
+    - name: STS_BASE_URL
+      value: https://sts-q1.preprod.local
+    - name: CICS_BASE_URL
+      value: https://cics-q1.adeo.no
+  strategy:
+    type: RollingUpdate
+  azure:
+    application:
+      enabled: true
+  liveness:
+    path: /
+    initialDelay: 1
+  readiness:
+    path: /
+    initialDelay: 1
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 10m
+      memory: 16Mi
+  replicas:
+    min: 1
+    max: 1
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
