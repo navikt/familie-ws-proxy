@@ -48,12 +48,12 @@ jobs:
           CLUSTER: dev-fss
           RESOURCE: .nais/app-dev.yaml
           VAR: image=${{ needs.build.outputs.image }}
-#      - name: Deploy til prod-fss team namespace
-#        uses: nais/deploy/actions/deploy@fa754451577294aae42872a69b888b3470478ec1 # ratchet:nais/deploy/actions/deploy@v2
-#        env:
-#          CLUSTER: prod-fss
-#          RESOURCE: .nais/app-prod.yaml
-#          VAR: image=${{ needs.build.outputs.image }}
+      - name: Deploy til prod-fss team namespace
+        uses: nais/deploy/actions/deploy@fa754451577294aae42872a69b888b3470478ec1 # ratchet:nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: prod-fss
+          RESOURCE: .nais/app-prod.yaml
+          VAR: image=${{ needs.build.outputs.image }}
       - name: Post deploy failures to Slack
         if: failure()
         run: |
