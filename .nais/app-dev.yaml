@@ -8,7 +8,7 @@ metadata:
 spec:
   image: {{ image }}
   port: 8080
-  webproxy: false
+  webproxy: true
   ingresses:
     - https://familie-ws-proxy.dev-fss-pub.nais.io
   accessPolicy:
@@ -17,12 +17,6 @@ spec:
         - application: familie-oppdrag-backend
           cluster: dev-gcp
   env:
-    - name: HTTP_PROXY
-      value: http://webproxy-nais.nav.no:8088
-    - name: HTTPS_PROXY
-      value: http://webproxy-nais.nav.no:8088
-    - name: NO_PROXY
-      value: localhost,127.0.0.1,.local,.adeo.no,.nav.no,.nais.io,.intern.dev.nav.no
     - name: STS_BASE_URL
       value: https://sts-q1.preprod.local
     - name: CICS_BASE_URL
