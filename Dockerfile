@@ -11,6 +11,9 @@
 # =============================================================================
 FROM openresty/openresty:1.31.1.1-2-alpine-fat
 
+# Installer tilgjengelige sikkerhetsoppdateringer fra Alpine-repositoriene.
+RUN apk upgrade --no-cache
+
 # Nais krever at containeren kjører som en ikke-root-bruker.
 # 101 er den vanlige uid/gid-en for nginx.
 ARG UID=101
