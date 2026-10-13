@@ -16,6 +16,9 @@ spec:
       rules:
         - application: familie-oppdrag-backend
           cluster: dev-gcp
+        - application: grunn-og-hjelp-oppdrag
+          cluster: dev-gcp
+          namespace: grunn-og-hjelp
   env:
     - name: HTTP_PROXY
       value: http://webproxy-nais.nav.no:8088
